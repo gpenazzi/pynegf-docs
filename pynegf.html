@@ -1,0 +1,610 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>pynegf package &#8212; pynegf 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pynegf" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pynegf-package">
+<h1>pynegf package<a class="headerlink" href="#pynegf-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pynegf.pynegf">
+<span id="pynegf-pynegf-module"></span><h2>pynegf.pynegf module<a class="headerlink" href="#module-pynegf.pynegf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pynegf.pynegf.PyNegf">
+<em class="property">class </em><code class="descclassname">pynegf.pynegf.</code><code class="descname">PyNegf</code><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A python wrapper around libnegf (<a class="reference external" href="https://github.com/libnegf/libnegf/">https://github.com/libnegf/libnegf/</a>).</p>
+<dl class="class">
+<dt id="pynegf.pynegf.PyNegf.LNParams">
+<em class="property">class </em><code class="descname">LNParams</code><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.LNParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_ctypes.Structure</span></code></p>
+<p>This is the wrapper around the main libnegf input data structure and
+must be kept up-to-date with the corresponding C data structure in
+lnParams.h</p>
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.contact_dos">
+<code class="descname">contact_dos</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.contact_dos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.delta">
+<code class="descname">delta</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.dore">
+<code class="descname">dore</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.dore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.dos_delta">
+<code class="descname">dos_delta</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.dos_delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.ec">
+<code class="descname">ec</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.ec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.emax">
+<code class="descname">emax</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.emax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.emin">
+<code class="descname">emin</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.emin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.eneconv">
+<code class="descname">eneconv</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.eneconv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.estep">
+<code class="descname">estep</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.estep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.ev">
+<code class="descname">ev</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.ev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.fictcont">
+<code class="descname">fictcont</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.fictcont" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.g_spin">
+<code class="descname">g_spin</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.g_spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.isSid">
+<code class="descname">isSid</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.isSid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.kbt_dm">
+<code class="descname">kbt_dm</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.kbt_dm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.kbt_t">
+<code class="descname">kbt_t</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.kbt_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.kpoint">
+<code class="descname">kpoint</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.kpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.min_or_max">
+<code class="descname">min_or_max</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.min_or_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.mu">
+<code class="descname">mu</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.mu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.mu_n">
+<code class="descname">mu_n</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.mu_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.mu_p">
+<code class="descname">mu_p</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.mu_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.n_kt">
+<code class="descname">n_kt</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.n_kt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.n_poles">
+<code class="descname">n_poles</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.n_poles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.nf">
+<code class="descname">nf</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.nf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.ni">
+<code class="descname">ni</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.ni" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.np_n">
+<code class="descname">np_n</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.np_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.np_p">
+<code class="descname">np_p</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.np_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.np_real">
+<code class="descname">np_real</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.np_real" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.readolddm_sgfs">
+<code class="descname">readolddm_sgfs</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.readolddm_sgfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.readoldt_sgfs">
+<code class="descname">readoldt_sgfs</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.readoldt_sgfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.spin">
+<code class="descname">spin</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.spin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.verbose">
+<code class="descname">verbose</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynegf.pynegf.PyNegf.LNParams.wght">
+<code class="descname">wght</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.wght" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.currents">
+<code class="descname">currents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.currents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.currents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a local copy of currents array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">array of currents for
+each possible lead pair defined in input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">currents (array)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.densitymatrix">
+<code class="descname">densitymatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.densitymatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.densitymatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a local copy of CSR sparse density matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">density matrix</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dm (scipy sparse)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.energies">
+<code class="descname">energies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.energies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.energies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a local copy of energies array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">real part of points on
+energy axis. This quantity may change in libnegf in
+runtime when performing different integrals (contour,
+real axis)
+im_en (array): imaginary part (same as above)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">real_en (array)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.get_params">
+<code class="descname">get_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.get_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get parameters from libnegf instance and update
+the class member. For debug
+or to get default values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.hs_from_file">
+<code class="descname">hs_from_file</code><span class="sig-paren">(</span><em>re_fname</em>, <em>im_fname</em>, <em>target</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.hs_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.hs_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read H and S from file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>re_fname</strong> (<em>string</em>) – real part path</li>
+<li><strong>im_fname</strong> (<em>string</em>) – string with imaginary part path</li>
+<li><strong>target</strong> (<em>int</em>) – 0 for hamiltonian, 1 for overlap</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.init_structure">
+<code class="descname">init_structure</code><span class="sig-paren">(</span><em>ncont</em>, <em>contend</em>, <em>surfend</em>, <em>plend</em>, <em>cblk</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.init_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.init_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the geometrical structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ncont</strong> (<em>int</em>) – number of contacts</li>
+<li><strong>contend</strong> (<em>numpy.ndarray</em>) – end of contact indexes (fortran indexing)</li>
+<li><strong>surfend</strong> (<em>numpy.ndarray</em>) – end of surface indexes (fortran indexing)</li>
+<li><strong>plend</strong> (<em>numpy.ndarray</em>) – end of PL indexes (fortran indexing)</li>
+<li><strong>cblk</strong> (<em>numpy.ndarray</em>) – indexes of blocks interacting with contacts
+(fortran indexing)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.ldos">
+<code class="descname">ldos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.ldos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.ldos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a local copy of dos from libnegf</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>local DOS for all given orbital intervals</dt>
+<dd>(2D array). Each row contains the result for
+an interval (ninterval, values)</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">ldos (ndarray)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.print_tnegf">
+<code class="descname">print_tnegf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.print_tnegf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.print_tnegf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all infos on TNegf container, for debug</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.read_negf_in">
+<code class="descname">read_negf_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.read_negf_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.read_negf_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse negf.in for file input mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.set_hamiltonian">
+<code class="descname">set_hamiltonian</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.set_hamiltonian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.set_hamiltonian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set H from a scipy.sparse.csr_matrix
+NOTE: libnegf is picky about the order of the PL blocks
+in the sparse matrix as well. There is no automatic reordering,
+you should have a well-sorted matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mat</strong> (<em>complex csr_matrix</em>) – input Hamiltonian</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.set_identity_overlap">
+<code class="descname">set_identity_overlap</code><span class="sig-paren">(</span><em>nrow</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.set_identity_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.set_identity_overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the overlap matrix as identity matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nrow</strong> (<em>int</em>) – number of rows</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.set_ldos_intervals">
+<code class="descname">set_ldos_intervals</code><span class="sig-paren">(</span><em>istart</em>, <em>iend</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.set_ldos_intervals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.set_ldos_intervals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define intervals for LDOS calculations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>istart</strong> (<em>int array</em>) – starting orbitals (fortran indexing)</li>
+<li><strong>iend</strong> (<em>int array</em>) – ending orbitals (fortran indexing)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.set_overlap">
+<code class="descname">set_overlap</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.set_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.set_overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set S from a scipy.sparse.csr_matrix
+NOTE: libnegf is picky about the order of the PL blocks
+in the sparse matrix as well. There is no automatic reordering,
+you should have a well-sorted matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mat</strong> (<em>complex csr_matrix</em>) – input Overlap</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.set_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameters from class member to libnegf.
+This is always called before a “solve” function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.solve_density">
+<code class="descname">solve_density</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.solve_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.solve_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve the density problem for an all electron problem (dft like)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.solve_landauer">
+<code class="descname">solve_landauer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.solve_landauer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.solve_landauer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve the Landauer problem: calculate tunnelling and
+(eventually) LDOS</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.transmission">
+<code class="descname">transmission</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.transmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.transmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a local copy of transmission from libnegf</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>transmission for all possible</dt>
+<dd>lead pairs (2D array). Each row contains
+the result for a lead pair (npair, values).</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">trans (ndarray)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.write_tun_and_dos">
+<code class="descname">write_tun_and_dos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.write_tun_and_dos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.write_tun_and_dos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write tunnelling and LDOS to file (for debugging)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pynegf">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pynegf" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pynegf.Settings">
+<em class="property">class </em><code class="descclassname">pynegf.</code><code class="descname">Settings</code><a class="reference internal" href="_modules/pynegf.html#Settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.Settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>A global setting dictionary.</p>
+<dl class="staticmethod">
+<dt id="pynegf.Settings.defaults">
+<em class="property">static </em><code class="descname">defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf.html#Settings.defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.Settings.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary of default settings.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pynegf.cdll_libnegf">
+<code class="descclassname">pynegf.</code><code class="descname">cdll_libnegf</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; ctypes.CDLL<a class="reference internal" href="_modules/pynegf.html#cdll_libnegf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.cdll_libnegf" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The loaded CDLL object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pynegf.load_dependencies">
+<code class="descclassname">pynegf.</code><code class="descname">load_dependencies</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Dict[str, ctypes.CDLL]<a class="reference internal" href="_modules/pynegf.html#load_dependencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.load_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load at module level the ctypes dependencies.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary containing the loaded library instances.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pynegf</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contents/gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pynegf</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pynegf package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pynegf</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">pynegf</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Gabriele Penazzi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/pynegf.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
