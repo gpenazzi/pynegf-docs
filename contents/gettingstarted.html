@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Getting started &#8212; pynegf 0.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -13,7 +11,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pynegf" href="../modules.html" />
@@ -30,21 +29,41 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>To get started you must have installed libnegf on your system. This dependency
-is not provided by the package yet. In order to be imported, libnegf
-has to be compiled as dynamic library. This is as simple as doing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/libnegf/libnegf.git
-$ cd libnegf &amp;&amp; mkdir _build &amp;&amp; cd _build
-$ cmake -DBUILD_SHARED_LIBS ..
-$ make
-$ make install
+<p>Pynegf requires a working installation of
+<a class="reference external" href="https://github.com/libnegf/libnegf">libnegf</a>. Pynegf ships
+his own version of libnegf as submodule, as it might occasionally
+point at experimental forks ahead of the official release.</p>
+<p>To clone the submodule run in the pynegf root directory:</p>
+<dl class="simple">
+<dt>::</dt><dd><p>$ git submodule init
+$ git submodule clone</p>
+</dd>
+</dl>
+<p>The compilation of the distributed submodule is driven by
+<a class="reference external" href="https://github.com/scikit-build/scikit-build">scikit-build</a>.
+Installing pynegf should be as simple as running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install .
 </pre></div>
 </div>
-<p>Pynegf will then try to determine libnegf location automatically.</p>
+<p>the package can also be installed with <cite>pip install -e</cite> (editable mode)
+for development purpose. In this case, make sure to add the location
+of the generated <cite>libnegf.so</cite> to <cite>LD_LIBRARY_PATH</cite>.
+Pynegf requires also an installed version of blas and lapack, which are
+loaded at runtime.</p>
+<p>It is also possible to install libnegf in the system, and pynegf will
+try to locate it automatically.
+You can force a given libnegf path doing the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ import pynegf
+$ pynegf.settings[&#39;negf&#39;]=r&#39;/home/user/whateverpath/libnegf.so&#39;
+$ pynegf.dependencies = load_dependencies()
+</pre></div>
+</div>
 <p>The python wrapper works similarly to the Fortran library: the Hamiltonian and
 Overlap are passed as input parameters using setters.
 Most of input parameters are contained in a data structure, first populated
@@ -113,18 +132,19 @@ for a simple linear chain.</p>
 
     <span class="c1"># Get transmission, dos and energies as numpy object.</span>
     <span class="n">energies</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">energies</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;energies&#39;</span><span class="p">,</span> <span class="n">energies</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;energies&#39;</span><span class="p">,</span> <span class="n">energies</span><span class="p">)</span>
     <span class="n">trans</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">transmission</span><span class="p">()</span>
     <span class="n">ldos</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">ldos</span><span class="p">()</span>
     <span class="n">currents</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">currents</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Currents&#39;</span><span class="p">,</span><span class="n">currents</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;trans&#39;</span><span class="p">,</span> <span class="n">trans</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Currents&#39;</span><span class="p">,</span><span class="n">currents</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;trans&#39;</span><span class="p">,</span> <span class="n">trans</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -143,6 +163,7 @@ for a simple linear chain.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">pynegf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/linearchain.html">HOWTO: A simple linear chain</a></li>
 </ul>
 
 <div class="relations">
@@ -155,17 +176,23 @@ for a simple linear chain.</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
@@ -174,8 +201,8 @@ for a simple linear chain.</p>
       &copy;2019, Gabriele Penazzi.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="../_sources/contents/gettingstarted.rst.txt"
