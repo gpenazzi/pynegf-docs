@@ -49,22 +49,32 @@
         <span class="c1"># Populate first with all defaults.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">())</span>
 
-
 <div class="viewcode-block" id="Settings.defaults"><a class="viewcode-back" href="../pynegf.html#pynegf.Settings.defaults">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">defaults</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">defaults</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a dictionary of default settings.</span>
+<span class="sd">        Returns a dictionary of default settings. The available settings are:</span>
+
+<span class="sd">        `negf_path`: path of libnegf</span>
+<span class="sd">        `blas_path`: path of libblas</span>
+<span class="sd">        `lapack_path`: path of liblapack</span>
+<span class="sd">        `mpi_support`: whether the library should run with MPI support.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">defaults</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># Populate the default paths.</span>
         <span class="k">for</span> <span class="n">lib</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;negf&#39;</span><span class="p">,</span> <span class="s1">&#39;blas&#39;</span><span class="p">,</span> <span class="s1">&#39;lapack&#39;</span><span class="p">):</span>
             <span class="n">defaults</span><span class="p">[</span><span class="n">lib</span> <span class="o">+</span> <span class="s1">&#39;_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_library</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>
 
+        <span class="c1"># Whether we run in parallel.</span>
+        <span class="n">defaults</span><span class="p">[</span><span class="s1">&#39;mpi_support&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
         <span class="k">return</span> <span class="n">defaults</span></div></div>
 
 
 <span class="c1"># Initialize global settings.</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>
+
+<span class="c1"># Set log level temporarily hardcoded.</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="load_dependencies"><a class="viewcode-back" href="../pynegf.html#pynegf.load_dependencies">[docs]</a><span class="k">def</span> <span class="nf">load_dependencies</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">]:</span>
@@ -105,7 +115,7 @@
 <span class="n">dependencies</span> <span class="o">=</span> <span class="n">load_dependencies</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="cdll_libnegf"><a class="viewcode-back" href="../pynegf.html#pynegf.cdll_libnegf">[docs]</a><span class="k">def</span> <span class="nf">cdll_libnegf</span><span class="p">()</span> <span class="o">-&gt;</span>  <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">:</span>
+<div class="viewcode-block" id="cdll_libnegf"><a class="viewcode-back" href="../pynegf.html#pynegf.cdll_libnegf">[docs]</a><span class="k">def</span> <span class="nf">cdll_libnegf</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return:</span>
 <span class="sd">        The loaded CDLL object</span>

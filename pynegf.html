@@ -42,7 +42,7 @@
 <span id="pynegf-pynegf-module"></span><h2>pynegf.pynegf module<a class="headerlink" href="#module-pynegf.pynegf" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pynegf.pynegf.PyNegf">
-<em class="property">class </em><code class="sig-prename descclassname">pynegf.pynegf.</code><code class="sig-name descname">PyNegf</code><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pynegf.pynegf.</code><code class="sig-name descname">PyNegf</code><span class="sig-paren">(</span><em class="sig-param">mpicomm=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A python wrapper around libnegf (<a class="reference external" href="https://github.com/libnegf/libnegf/">https://github.com/libnegf/libnegf/</a>).</p>
 <dl class="class">
@@ -474,8 +474,12 @@ the result for a lead pair (npair, values).</p>
 <p>A global setting dictionary.</p>
 <dl class="method">
 <dt id="pynegf.Settings.defaults">
-<em class="property">static </em><code class="sig-name descname">defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf.html#Settings.defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.Settings.defaults" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a dictionary of default settings.</p>
+<em class="property">static </em><code class="sig-name descname">defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Dict[str, Any]<a class="reference internal" href="_modules/pynegf.html#Settings.defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.Settings.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary of default settings. The available settings are:</p>
+<p><cite>negf_path</cite>: path of libnegf
+<cite>blas_path</cite>: path of libblas
+<cite>lapack_path</cite>: path of liblapack
+<cite>mpi_support</cite>: whether the library should run with MPI support.</p>
 </dd></dl>
 
 </dd></dl>
