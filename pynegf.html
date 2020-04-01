@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <title>pynegf package &#8212; pynegf 0.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -15,24 +15,27 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="HOWTO: A simple linear chain" href="notebooks/linearchain.html" />
-    <link rel="prev" title="pynegf" href="modules.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="Tutorials" href="notebooks.html" />
+    <link rel="prev" title="Reference guide" href="modules.html" /> 
   </head><body>
-  
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>pynegf 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>pynegf package</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="modules.html">Reference guide</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="notebooks.html">Tutorials</a>&#160;&#160;»
+        </p>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
+      </div>
+      <div class="content" role="main">
+        
+        
   <div class="section" id="pynegf-package">
 <h1>pynegf package<a class="headerlink" href="#pynegf-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
@@ -51,7 +54,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_ctypes.Structure</span></code></p>
 <p>This is the wrapper around the main libnegf input data structure and
 must be kept up-to-date with the corresponding C data structure in
-lnParams.h</p>
+lnParams.h.</p>
 <dl class="attribute">
 <dt id="pynegf.pynegf.PyNegf.LNParams.contact_dos">
 <code class="sig-name descname">contact_dos</code><a class="headerlink" href="#pynegf.pynegf.PyNegf.LNParams.contact_dos" title="Permalink to this definition">¶</a></dt>
@@ -262,8 +265,8 @@ each possible lead pair defined in input</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pynegf.pynegf.PyNegf.densitymatrix">
-<code class="sig-name descname">densitymatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.densitymatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.densitymatrix" title="Permalink to this definition">¶</a></dt>
+<dt id="pynegf.pynegf.PyNegf.density_matrix">
+<code class="sig-name descname">density_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.density_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.density_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a local copy of CSR sparse density matrix</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -294,6 +297,27 @@ im_en (array): imaginary part (same as above)</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pynegf.pynegf.PyNegf.energy_current">
+<code class="sig-name descname">energy_current</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.energy_current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.energy_current" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a local copy of the energy-resolved current. This quantity is
+only calculated if el-ph interactions are used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>energy resolved current for all possible</dt><dd><p>lead pairs (2D array). Currents for each lead pair
+are ordered by row, i.e. trans[0, :] contains the
+values for the first lead pair.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>curr (ndarray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="pynegf.pynegf.PyNegf.get_params">
 <code class="sig-name descname">get_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.get_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.get_params" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get parameters from libnegf instance and update
@@ -318,7 +342,7 @@ or to get default values.</p>
 
 <dl class="method">
 <dt id="pynegf.pynegf.PyNegf.init_structure">
-<code class="sig-name descname">init_structure</code><span class="sig-paren">(</span><em class="sig-param">ncont</em>, <em class="sig-param">contend</em>, <em class="sig-param">surfend</em>, <em class="sig-param">plend</em>, <em class="sig-param">cblk</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.init_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.init_structure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">init_structure</code><span class="sig-paren">(</span><em class="sig-param">ncont</em>, <em class="sig-param">contend</em>, <em class="sig-param">surfend</em>, <em class="sig-param">plend=None</em>, <em class="sig-param">cblk=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.init_structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.init_structure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the geometrical structure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -326,8 +350,10 @@ or to get default values.</p>
 <li><p><strong>ncont</strong> (<em>int</em>) – number of contacts</p></li>
 <li><p><strong>contend</strong> (<em>numpy.ndarray</em>) – end of contact indexes</p></li>
 <li><p><strong>surfend</strong> (<em>numpy.ndarray</em>) – end of surface indexes</p></li>
-<li><p><strong>plend</strong> (<em>numpy.ndarray</em>) – end of PL indexes</p></li>
-<li><p><strong>cblk</strong> (<em>numpy.ndarray</em>) – indexes of blocks interacting with contacts</p></li>
+<li><p><strong>plend</strong> (<em>numpy.ndarray</em>) – end of PL indexes. If None to trigger
+an automatic partitioning.</p></li>
+<li><p><strong>cblk</strong> (<em>numpy.ndarray</em>) – indexes of blocks interacting with contacts.
+Ignored if plend is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -362,6 +388,21 @@ an interval (ninterval, values)</p>
 <dt id="pynegf.pynegf.PyNegf.read_negf_in">
 <code class="sig-name descname">read_negf_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.read_negf_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.read_negf_in" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse negf.in for file input mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynegf.pynegf.PyNegf.set_diagonal_elph_dephasing">
+<code class="sig-name descname">set_diagonal_elph_dephasing</code><span class="sig-paren">(</span><em class="sig-param">coupling</em>, <em class="sig-param">max_scba_iter=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.set_diagonal_elph_dephasing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.set_diagonal_elph_dephasing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a diagonal electron-phonon dephasing model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coupling</strong> (<em>double array</em>) – the coupling strength on each orbital,
+expressed as energy.</p></li>
+<li><p><strong>max_scba_iter</strong> (<em>int</em>) – maximum number of SCBA iterations.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -440,12 +481,14 @@ This is always called before a “solve” function</p>
 <dl class="method">
 <dt id="pynegf.pynegf.PyNegf.transmission">
 <code class="sig-name descname">transmission</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pynegf/pynegf.html#PyNegf.transmission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pynegf.pynegf.PyNegf.transmission" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a local copy of transmission from libnegf</p>
+<dd><p>Get a local copy of transmission from libnegf. This quantity
+is not available if el-ph interactions are used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><dl class="simple">
-<dt>transmission for all possible</dt><dd><p>lead pairs (2D array). Each row contains
-the result for a lead pair (npair, values).</p>
+<dt>transmission for all possible</dt><dd><p>lead pairs (2D array). Transmission for each lead pair
+are ordered by row, i.e. trans[0, :] contains the
+values for the first lead pair.</p>
 </dd>
 </dl>
 </p>
@@ -478,8 +521,7 @@ the result for a lead pair (npair, values).</p>
 <dd><p>Returns a dictionary of default settings. The available settings are:</p>
 <p><cite>negf_path</cite>: path of libnegf
 <cite>blas_path</cite>: path of libblas
-<cite>lapack_path</cite>: path of liblapack
-<cite>mpi_support</cite>: whether the library should run with MPI support.</p>
+<cite>lapack_path</cite>: path of liblapack</p>
 </dd></dl>
 
 </dd></dl>
@@ -509,79 +551,22 @@ the result for a lead pair (npair, values).</p>
 </div>
 
 
-          </div>
-          
-        </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">pynegf</a></h1>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="modules.html">Reference guide</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="notebooks.html">Tutorials</a>&#160;&#160;»
+        </p>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="contents/gettingstarted.html">Getting started</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pynegf</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">pynegf package</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/linearchain.html">HOWTO: A simple linear chain</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  <li><a href="modules.html">pynegf</a><ul>
-      <li>Previous: <a href="modules.html" title="previous chapter">pynegf</a></li>
-      <li>Next: <a href="notebooks/linearchain.html" title="next chapter">HOWTO: A simple linear chain</a></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019, Gabriele Penazzi.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/pynegf.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Gabriele Penazzi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
   </body>
 </html>

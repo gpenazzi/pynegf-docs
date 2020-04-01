@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <title>pynegf.pynegf &#8212; pynegf 0.1 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -14,31 +14,38 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-   
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="search" title="Search" href="../../search.html" /> 
   </head><body>
-  
+      <div class="header" role="banner"><h1 class="heading"><a href="../../index.html">
+          <span>pynegf 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>pynegf.pynegf</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
+      </div>
+      <div class="content" role="main">
+        
+        
   <h1>Source code for pynegf.pynegf</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">POINTER</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">Structure</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">byref</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_bool</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_char</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_char_p</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_double</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">c_int</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">pointer</span>
 
-<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">dtype</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy.ctypeslib</span> <span class="kn">import</span> <span class="n">ndpointer</span>
 <span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span>
+
 <span class="kn">from</span> <span class="nn">pynegf</span> <span class="kn">import</span> <span class="n">mpi</span>
 
 
@@ -55,7 +62,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is the wrapper around the main libnegf input data structure and</span>
 <span class="sd">        must be kept up-to-date with the corresponding C data structure in</span>
-<span class="sd">        lnParams.h</span>
+<span class="sd">        lnParams.h.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_fields_</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s2">&quot;verbose&quot;</span><span class="p">,</span> <span class="n">c_int</span><span class="p">),</span>
@@ -98,24 +105,25 @@
 <span class="sd">        Args:</span>
 <span class="sd">            mpicomm (mpi4py.MPI.Intracomm): the MPI communicator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check if the library is loaded.</span>
         <span class="kn">from</span> <span class="nn">pynegf</span> <span class="kn">import</span> <span class="n">cdll_libnegf</span>
+        <span class="c1"># Check if the library is loaded.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">cdll_libnegf</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;libnegf.so has not been loaded. Call pynegf.load_library() first.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span> <span class="o">=</span> <span class="n">cdll_libnegf</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span> <span class="o">=</span> <span class="n">cdll_libnegf</span><span class="p">()</span>
 
-        <span class="c1"># Check if we have MPI. By default if MPI is available and no communicator</span>
-        <span class="c1"># is given, then use WORLD.</span>
+        <span class="c1"># Check if we have MPI. By default if MPI is available and no</span>
+        <span class="c1"># communicator is given, then use WORLD.</span>
         <span class="k">if</span> <span class="n">mpicomm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">mpi</span><span class="o">.</span><span class="n">has_mpi</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s1">&#39;An mpi communicator has been given, but mpi is not supported. Running serially.&#39;</span><span class="p">)</span>
+                <span class="s1">&#39;An mpi communicator has been given, but mpi is not supported. &#39;</span>
+                <span class="s1">&#39;Running serially.&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">mpicomm</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mpi</span><span class="o">.</span><span class="n">has_mpi</span><span class="p">():</span>
             <span class="n">mpicomm</span> <span class="o">=</span> <span class="n">mpi</span><span class="o">.</span><span class="n">get_world_comm</span><span class="p">()</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Running libnegf on </span><span class="si">{}</span><span class="s1"> processes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mpicomm</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Running libnegf on </span><span class="si">{}</span><span class="s1"> processes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">mpicomm</span><span class="o">.</span><span class="n">Get_size</span><span class="p">()))</span>
 
-        <span class="c1">#Initialize and store handler reference in self._href</span>
+        <span class="c1"># Initialize and store handler reference in self._href</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_handler_size</span> <span class="o">=</span> <span class="n">c_int</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_gethandlersize</span><span class="p">(</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handler_size</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_int</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handler_size</span><span class="o">.</span><span class="n">value</span><span class="p">)()</span>
@@ -148,9 +156,8 @@
 <span class="sd">        or to get default values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_get_params</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
-                <span class="n">POINTER</span><span class="p">(</span><span class="n">PyNegf</span><span class="o">.</span><span class="n">LNParams</span><span class="p">)</span>
-                <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
+            <span class="n">POINTER</span><span class="p">(</span><span class="n">PyNegf</span><span class="o">.</span><span class="n">LNParams</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_get_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span> <span class="n">pointer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PyNegf.set_params"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -159,9 +166,8 @@
 <span class="sd">        This is always called before a &quot;solve&quot; function</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_params</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
-                <span class="n">POINTER</span><span class="p">(</span><span class="n">PyNegf</span><span class="o">.</span><span class="n">LNParams</span><span class="p">)</span>
-                <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
+            <span class="n">POINTER</span><span class="p">(</span><span class="n">PyNegf</span><span class="o">.</span><span class="n">LNParams</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PyNegf.read_negf_in"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.read_negf_in">[docs]</a>    <span class="k">def</span> <span class="nf">read_negf_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -214,7 +220,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_s_id</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span> <span class="n">c_int</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_s_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span> <span class="n">c_int</span><span class="p">(</span><span class="n">nrow</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PyNegf.init_structure"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.init_structure">[docs]</a>    <span class="k">def</span> <span class="nf">init_structure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncont</span><span class="p">,</span> <span class="n">contend</span><span class="p">,</span> <span class="n">surfend</span><span class="p">,</span> <span class="n">plend</span><span class="p">,</span> <span class="n">cblk</span><span class="p">):</span>
+<div class="viewcode-block" id="PyNegf.init_structure"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.init_structure">[docs]</a>    <span class="k">def</span> <span class="nf">init_structure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncont</span><span class="p">,</span> <span class="n">contend</span><span class="p">,</span> <span class="n">surfend</span><span class="p">,</span> <span class="n">plend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cblk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the geometrical structure.</span>
 
@@ -222,8 +228,10 @@
 <span class="sd">            ncont (int): number of contacts</span>
 <span class="sd">            contend (numpy.ndarray): end of contact indexes</span>
 <span class="sd">            surfend (numpy.ndarray): end of surface indexes</span>
-<span class="sd">            plend (numpy.ndarray): end of PL indexes</span>
-<span class="sd">            cblk (numpy.ndarray): indexes of blocks interacting with contacts</span>
+<span class="sd">            plend (numpy.ndarray): end of PL indexes. If None to trigger</span>
+<span class="sd">                an automatic partitioning.</span>
+<span class="sd">            cblk (numpy.ndarray): indexes of blocks interacting with contacts.</span>
+<span class="sd">                Ignored if plend is None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Always call init_contacts here. We anyway have the information.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_init_structure</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
@@ -232,6 +240,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_init_contacts</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">c_int</span><span class="p">(</span><span class="n">ncont</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">cblk</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;cblk must be specified if plend is specified.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plend</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="k">if</span> <span class="n">cblk</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cblk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
 
         <span class="n">npl</span> <span class="o">=</span> <span class="n">plend</span><span class="o">.</span><span class="n">size</span>
 
@@ -279,7 +294,8 @@
             <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">)]</span>
         <span class="n">mat_re</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
         <span class="n">mat_im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_h_cp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_h_cp</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">c_int</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
             <span class="n">mat_re</span><span class="p">,</span>
             <span class="n">mat_im</span><span class="p">,</span>
@@ -306,7 +322,8 @@
             <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">)]</span>
         <span class="n">mat_re</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
         <span class="n">mat_im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_s_cp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_s_cp</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">c_int</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
             <span class="n">mat_re</span><span class="p">,</span>
             <span class="n">mat_im</span><span class="p">,</span>
@@ -363,14 +380,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_get_currents</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">byref</span><span class="p">(</span><span class="n">npoints</span><span class="p">),</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">currents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">npoints</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_get_currents</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">byref</span><span class="p">(</span><span class="n">npoints</span><span class="p">),</span> <span class="n">currents</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">currents</span></div>
 
-<div class="viewcode-block" id="PyNegf.densitymatrix"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.densitymatrix">[docs]</a>    <span class="k">def</span> <span class="nf">densitymatrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PyNegf.density_matrix"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.density_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">density_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a local copy of CSR sparse density matrix</span>
 
@@ -393,35 +410,39 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">byref</span><span class="p">(</span><span class="n">nnz</span><span class="p">),</span>
             <span class="n">byref</span><span class="p">(</span><span class="n">nrow</span><span class="p">),</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">),</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">),</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">),</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">rowpnt</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nrow</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">)</span>
-        <span class="n">colind</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nnz</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">rowpnt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nrow</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">)</span>
+        <span class="n">colind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nnz</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">)</span>
         <span class="n">re_dm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nnz</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">)</span>
         <span class="n">im_dm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nnz</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_get_dm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_get_dm</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">byref</span><span class="p">(</span><span class="n">nnz</span><span class="p">),</span>
             <span class="n">byref</span><span class="p">(</span><span class="n">nrow</span><span class="p">),</span>
             <span class="n">rowpnt</span><span class="p">,</span>
             <span class="n">colind</span><span class="p">,</span>
             <span class="n">re_dm</span><span class="p">,</span>
             <span class="n">im_dm</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="c1">#Fix indexing</span>
+        <span class="c1"># Fix indexing</span>
         <span class="n">rowpnt</span> <span class="o">=</span> <span class="n">rowpnt</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">colind</span> <span class="o">=</span> <span class="n">colind</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">dm</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">re_dm</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">im_dm</span><span class="p">,</span> <span class="n">colind</span><span class="p">,</span> <span class="n">rowpnt</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">dm</span></div>
+        <span class="n">density_matrix</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">re_dm</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">im_dm</span><span class="p">,</span> <span class="n">colind</span><span class="p">,</span> <span class="n">rowpnt</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">density_matrix</span></div>
 
 <div class="viewcode-block" id="PyNegf.transmission"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.transmission">[docs]</a>    <span class="k">def</span> <span class="nf">transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a local copy of transmission from libnegf</span>
+<span class="sd">        Get a local copy of transmission from libnegf. This quantity</span>
+<span class="sd">        is not available if el-ph interactions are used.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            trans (ndarray): transmission for all possible</span>
-<span class="sd">                lead pairs (2D array). Each row contains</span>
-<span class="sd">                the result for a lead pair (npair, values).</span>
+<span class="sd">                lead pairs (2D array). Transmission for each lead pair</span>
+<span class="sd">                are ordered by row, i.e. trans[0, :] contains the</span>
+<span class="sd">                values for the first lead pair.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_associate_transmission</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
@@ -434,9 +455,36 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">pointer</span><span class="p">(</span><span class="n">tr_shape</span><span class="p">),</span>
             <span class="n">pointer</span><span class="p">(</span><span class="n">tr_pointer</span><span class="p">))</span>
-        <span class="n">tr_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="n">tr_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">tr_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">tr_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tr_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">trans</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span><span class="n">tr_pointer</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">tr_shape</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">trans</span></div>
+        <span class="k">return</span> <span class="n">trans</span><span class="o">.</span><span class="n">T</span></div>
+
+<div class="viewcode-block" id="PyNegf.energy_current"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.energy_current">[docs]</a>    <span class="k">def</span> <span class="nf">energy_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a local copy of the energy-resolved current. This quantity is</span>
+<span class="sd">        only calculated if el-ph interactions are used.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            curr (ndarray): energy resolved current for all possible</span>
+<span class="sd">                lead pairs (2D array). Currents for each lead pair</span>
+<span class="sd">                are ordered by row, i.e. trans[0, :] contains the</span>
+<span class="sd">                values for the first lead pair.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_associate_energy_current</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
+            <span class="n">POINTER</span><span class="p">(</span><span class="n">c_int</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">POINTER</span><span class="p">(</span><span class="n">POINTER</span><span class="p">(</span><span class="n">c_double</span><span class="p">))</span>
+            <span class="p">]</span>
+        <span class="n">current_pointer</span> <span class="o">=</span> <span class="n">POINTER</span><span class="p">(</span><span class="n">c_double</span><span class="p">)()</span>
+        <span class="n">current_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_int</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_associate_energy_current</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
+            <span class="n">pointer</span><span class="p">(</span><span class="n">current_shape</span><span class="p">),</span>
+            <span class="n">pointer</span><span class="p">(</span><span class="n">current_pointer</span><span class="p">))</span>
+        <span class="n">current_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">current_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span>
+            <span class="n">current_pointer</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">current_shape</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">current</span><span class="o">.</span><span class="n">T</span></div>
 
 <div class="viewcode-block" id="PyNegf.ldos"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.ldos">[docs]</a>    <span class="k">def</span> <span class="nf">ldos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -458,7 +506,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
             <span class="n">pointer</span><span class="p">(</span><span class="n">ldos_shape</span><span class="p">),</span>
             <span class="n">pointer</span><span class="p">(</span><span class="n">ldos_pointer</span><span class="p">))</span>
-        <span class="n">ldos_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">ldos_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">ldos_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">ldos_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">ldos_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ldos_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">ldos</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ctypeslib</span><span class="o">.</span><span class="n">as_array</span><span class="p">(</span><span class="n">ldos_pointer</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">ldos_shape</span><span class="p">))</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">ldos</span></div>
 
@@ -476,15 +524,43 @@
         <span class="n">iend_f</span> <span class="o">=</span> <span class="n">iend</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_init_ldos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span> <span class="n">c_int</span><span class="p">(</span><span class="n">nldos</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_ldos_intervals</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
-                <span class="n">c_int</span><span class="p">,</span>
-                <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span>
-                <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">)]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_ldos_intervals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
-                <span class="n">nldos</span><span class="p">,</span>
-                <span class="n">istart_f</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-                <span class="n">iend_f</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
+            <span class="n">c_int</span><span class="p">,</span>
+            <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span>
+            <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_ldos_intervals</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
+            <span class="n">nldos</span><span class="p">,</span>
+            <span class="n">istart_f</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">iend_f</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span></div>
 
+<div class="viewcode-block" id="PyNegf.set_diagonal_elph_dephasing"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.set_diagonal_elph_dephasing">[docs]</a>    <span class="k">def</span> <span class="nf">set_diagonal_elph_dephasing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coupling</span><span class="p">,</span> <span class="n">max_scba_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Define a diagonal electron-phonon dephasing model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            coupling (double array): the coupling strength on each orbital,</span>
+<span class="sd">                expressed as energy.</span>
+<span class="sd">            max_scba_iter (int): maximum number of SCBA iterations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_elph_dephasing</span><span class="o">.</span><span class="n">argtypes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href_type</span><span class="p">,</span>
+            <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_double</span><span class="p">),</span>
+            <span class="n">c_int</span><span class="p">,</span>
+            <span class="n">ndpointer</span><span class="p">(</span><span class="n">c_int</span><span class="p">),</span>
+            <span class="n">c_int</span><span class="p">,</span>
+            <span class="n">c_int</span><span class="p">,</span>
+            <span class="n">c_int</span><span class="p">]</span>
+        <span class="n">orbsperatom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_set_elph_dephasing</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">,</span>
+            <span class="n">coupling</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">REALTYPE</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">coupling</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="n">orbsperatom</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">INTTYPE</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">orbsperatom</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="n">max_scba_iter</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PyNegf.write_tun_and_dos"><a class="viewcode-back" href="../../pynegf.html#pynegf.pynegf.PyNegf.write_tun_and_dos">[docs]</a>    <span class="k">def</span> <span class="nf">write_tun_and_dos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -500,73 +576,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lib</span><span class="o">.</span><span class="n">negf_print_tnegf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_href</span><span class="p">)</span></div></div>
 </pre></div>
 
-          </div>
-          
-        </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">pynegf</a></h1>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        <a class="uplink" href="../../index.html">Contents</a>
+        </p>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../contents/gettingstarted.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pynegf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../notebooks/linearchain.html">HOWTO: A simple linear chain</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  <li><a href="../pynegf.html">pynegf</a><ul>
-  </ul></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019, Gabriele Penazzi.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
 
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Gabriele Penazzi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
   </body>
 </html>

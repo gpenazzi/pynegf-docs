@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Getting started &#8212; pynegf 0.1 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -15,24 +15,27 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pynegf" href="../modules.html" />
-    <link rel="prev" title="Welcome to pynegf’s documentation!" href="../index.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="Reference guide" href="../modules.html" />
+    <link rel="prev" title="Welcome to pynegf’s documentation!" href="../index.html" /> 
   </head><body>
-  
+      <div class="header" role="banner"><h1 class="heading"><a href="../index.html">
+          <span>pynegf 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>Getting started</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="../index.html">Welcome to pynegf’s documentation!</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../modules.html">Reference guide</a>&#160;&#160;»
+        </p>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
+      </div>
+      <div class="content" role="main">
+        
+        
   <div class="section" id="getting-started">
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <p>Pynegf requires a working installation of
@@ -77,148 +80,26 @@ Overlap are passed as input parameters using setters.
 Most of input parameters are contained in a data structure, first populated
 with default values. The actual calculation is then triggerred with <cite>solve</cite>
 methods and afterwards results can be retrieved via specialized functions.</p>
-<p>The following example shows a calculation of transmission and DOS
-for a simple linear chain.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">import</span> <span class="nn">pynegf</span>
-<span class="kn">import</span> <span class="nn">scipy</span>
-
-
-<span class="k">def</span> <span class="nf">transmission_linear_chain</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculate the transmission for a linear chain model hamiltonian.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Start an instance of the library.</span>
-    <span class="n">negf</span> <span class="o">=</span> <span class="n">pynegf</span><span class="o">.</span><span class="n">PyNegf</span><span class="p">()</span>
-
-    <span class="c1"># Build the sparse hamiltonian for the nearest-neighbor linear chain.</span>
-    <span class="n">mat</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">80</span><span class="p">):</span>
-        <span class="n">mat</span><span class="p">[</span><span class="n">ii</span><span class="p">,</span> <span class="n">ii</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="n">mat</span><span class="p">[</span><span class="n">ii</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">81</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
-        <span class="n">mat</span><span class="p">[</span><span class="n">ii</span><span class="p">,</span> <span class="n">ii</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="n">mat</span><span class="p">[</span><span class="n">ii</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="n">mat</span><span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-
-    <span class="n">mat_csr</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
-    <span class="n">mat_csr</span><span class="o">.</span><span class="n">sort_indices</span><span class="p">()</span>
-
-    <span class="c1"># Pass the hamiltonian to libnegf.</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">set_hamiltonian</span><span class="p">(</span><span class="n">mat_csr</span><span class="p">)</span>
-
-    <span class="c1"># Set an identity overlap matrix.</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">set_identity_overlap</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-
-    <span class="c1"># Initialize the system structure. Here we specify the following</span>
-    <span class="c1"># parameters:</span>
-    <span class="c1">#   number of contact: 2</span>
-    <span class="c1">#   start-end index of first contact: numpy.array([80, 100])</span>
-    <span class="c1">#   start-end index of second contact: numpy.array([60, 80])</span>
-    <span class="c1">#   end-index of each layer, for the iterative algorithm: numpy.array([15, 30, 45, 60])</span>
-    <span class="c1">#   index of bloks interacting with the contact: numpy.array([4, 1])</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">init_structure</span><span class="p">(</span>
-        <span class="mi">2</span><span class="p">,</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">]),</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">]),</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">60</span><span class="p">]),</span>
-        <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
-
-    <span class="c1"># Initialize parameters relevant for the transmission.</span>
-    <span class="c1"># the chemical potential mu is used for evaluating the current only.</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.0</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="mf">3.0</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">estep</span> <span class="o">=</span> <span class="mf">0.01</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">set_params</span><span class="p">()</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">print_tnegf</span><span class="p">()</span>
-
-    <span class="c1"># Set also some local DOS intervals.</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">set_ldos_intervals</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">]))</span>
-    <span class="n">negf</span><span class="o">.</span><span class="n">solve_landauer</span><span class="p">()</span>
-
-    <span class="c1"># Get transmission, dos and energies as numpy object.</span>
-    <span class="n">energies</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">energies</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;energies&#39;</span><span class="p">,</span> <span class="n">energies</span><span class="p">)</span>
-    <span class="n">trans</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">transmission</span><span class="p">()</span>
-    <span class="n">ldos</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">ldos</span><span class="p">()</span>
-    <span class="n">currents</span> <span class="o">=</span> <span class="n">negf</span><span class="o">.</span><span class="n">currents</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Currents&#39;</span><span class="p">,</span><span class="n">currents</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;trans&#39;</span><span class="p">,</span> <span class="n">trans</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Refer to the <span class="xref std std-ref">Tutorials</span> section for usage examples.</p>
 </div>
 
 
-          </div>
-          
-        </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">pynegf</a></h1>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="../index.html">Welcome to pynegf’s documentation!</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="../modules.html">Reference guide</a>&#160;&#160;»
+        </p>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">pynegf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/linearchain.html">HOWTO: A simple linear chain</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../index.html" title="previous chapter">Welcome to pynegf’s documentation!</a></li>
-      <li>Next: <a href="../modules.html" title="next chapter">pynegf</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
-        </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019, Gabriele Penazzi.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="../_sources/contents/gettingstarted.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Gabriele Penazzi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
   </body>
 </html>
